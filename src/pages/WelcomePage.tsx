@@ -1,11 +1,22 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Globe, MessageCircle, Settings } from 'lucide-react';
+import { Globe, MessageCircle, Settings, LogIn, LogOut } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { toast } from '@/hooks/use-toast';
 
 const WelcomePage: React.FC = () => {
   const navigate = useNavigate();
+  const { user, logout, isLoading } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    toast({
+      title: "Déconnexion réussie",
+      description: "Vous avez été déconnecté de LinguaChat",
+    });
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-chat-primary to-chat-secondary p-4">
@@ -20,22 +31,57 @@ const WelcomePage: React.FC = () => {
           </p>
           
           <div className="space-y-4">
-            <Button 
-              className="w-full bg-chat-primary hover:bg-chat-primary/90"
-              onClick={() => navigate('/chat/1')}
-            >
-              <MessageCircle className="mr-2 h-4 w-4" />
-              Commencer une conversation
-            </Button>
-            
-            <Button 
-              variant="outline" 
-              className="w-full"
-              onClick={() => navigate('/settings')}
-            >
-              <Settings className="mr-2 h-4 w-4" />
-              Paramètres
-            </Button>
+            {user ? (
+              <>
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  {user.avatar ? (
+                    <img src={user.avatar} alt={user.name} className="w-10 h-10 rounded-full" />
+                  ) : (
+                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                      <span className="text-primary font-bold">{user.name.charAt(0)}</span>
+                    </div>
+                  )}
+                  <div className="text-left">
+                    <p className="font-medium">{user.name}</p>
+                    <p className="text-sm text-muted-foreground">Langue: {user.preferredLanguage}</p>
+                  </div>
+                </div>
+
+                <Button 
+                  className="w-full bg-chat-primary hover:bg-chat-primary/90"
+                  onClick={() => navigate('/chat/1')}
+                >
+                  <MessageCircle className="mr-2 h-4 w-4" />
+                  Commencer une conversation
+                </Button>
+                
+                <Button 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => navigate('/settings')}
+                >
+                  <Settings className="mr-2 h-4 w-4" />
+                  Paramètres
+                </Button>
+                
+                <Button 
+                  variant="outline"
+                  className="w-full"
+                  onClick={handleLogout}
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Déconnexion
+                </Button>
+              </>
+            ) : (
+              <Button 
+                className="w-full bg-chat-primary hover:bg-chat-primary/90"
+                onClick={() => navigate('/login')}
+              >
+                <LogIn className="mr-2 h-4 w-4" />
+                Connexion
+              </Button>
+            )}
           </div>
         </div>
         
