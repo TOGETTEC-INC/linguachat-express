@@ -64,13 +64,13 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				chat: {
-					primary: '#0EA5E9',
-					secondary: '#1E40AF',
-					light: '#F1F0FB',
-					dark: '#333333',
-					accent: '#8B5CF6',
-					sent: '#E5DEFF',
-					received: '#D3E4FD'
+					primary: '#25D366',      // WhatsApp green
+					secondary: '#128C7E',    // WhatsApp darker green
+					light: '#DCF8C6',        // WhatsApp light message background
+					dark: '#333333',         // Dark text
+					accent: '#34B7F1',       // WhatsApp blue accent
+					sent: '#E1F7CB',         // Sent message bubble
+					received: '#FFFFFF'       // Received message bubble
 				}
 			},
 			borderRadius: {

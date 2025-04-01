@@ -10,9 +10,9 @@ interface ChatLayoutProps {
 const ChatLayout: React.FC<ChatLayoutProps> = ({ children }) => {
   return (
     <SidebarProvider>
-      <div className="min-h-screen flex w-full bg-gray-50">
+      <div className="min-h-screen flex w-full bg-[#f0f2f5]">
         <ChatSidebar />
-        <main className="flex-1 flex flex-col h-screen">
+        <main className="flex-1 flex flex-col h-screen overflow-hidden">
           {children}
         </main>
       </div>
